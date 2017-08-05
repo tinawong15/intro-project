@@ -1,9 +1,13 @@
 <html>
   <head>
-    <title>{{ title }}</title>
+    <title>{{ title }} - Loudspeaker</title>
   </head>
   <body>
-      <div><a href="/index">Home</a></div>
+      <div>Loudspeaker - <a href="/index">Home</a>
+      {% if g.user.is_authenticated %}
+      | <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+      </div>
        <hr>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
