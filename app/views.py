@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
-from .forms import LoginForm
+from .forms import LoginForm, SignupForm
 from .models import User
 
 @lm.user_loader
@@ -45,6 +45,24 @@ def login():
     return render_template('login.html', 
                            title='Sign In',
                            form=form)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm()
+    if form.validate_on_submit():
+        session['username'] = form.username.data
+        new_user = User(username = form.username.data,
+                               firstname= form.firstname.data,
+                               lastname = form.lastname.data,
+                               email = form.email.data,
+                               nickname = form.nickname.data,
+                               password = form.password.data)
+        
+        flash('Welcome to Loudspeaker %s!' % (form.firstname.data))
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('signup.html', title='Create an Account', form=form)
 
 @app.route('/logout')
 def logout():
