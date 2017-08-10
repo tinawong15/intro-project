@@ -1,6 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, EqualTo, Email
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, EqualTo, Email, Length
 from .models import User
 
 class LoginForm(Form):
@@ -31,3 +31,7 @@ class SignupForm(Form):
 			isError = True
 
 		return not isError
+
+class EditForm(Form):
+	nickname = StringField('nickname', validators=[DataRequired()])
+	about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
