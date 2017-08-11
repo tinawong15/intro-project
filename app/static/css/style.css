@@ -55,12 +55,34 @@ body {
   margin: 10px;
   text-align: center;
   background-color: #eeeeee;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: inline-block;
 }
 
 .title {
   font-size: 28px;
   font-weight: bold;
+}
+
+input[type=text], input[type=password] {
+  display: inline-block;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 18px;
+  padding: 5px 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
 }
 
 .flash-holder {
