@@ -1,26 +1,43 @@
 <html>
   <head>
     <title>{{ title }} - Loudspeaker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></link>
   </head>
   <body>
-      <div>Loudspeaker - <a href="/index">Home</a>
-      {% if g.user.is_authenticated %}
-      | <a href="{{ url_for('user', username=g.user.username) }}">Your Profile</a>
-      | <a href="{{ url_for('logout') }}">Logout</a>
+    <ul class="nav">
+      <li class="nav-logo nav-left">
+        <a href="{{ url_for('index') }}">Loudspeaker</a>
+      </li>
+      {% if g.user.is_authenticated %} 
+      <li class="nav-right">
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </li>
+      <li class="nav-right">
+        <a href="{{ url_for('user', username=g.user.username) }}">Your Profile</a>
+      </li>
       {% else %}
-      | <a href="{{ url_for('login') }}">Login</a>
-      | <a href="{{ url_for('signup') }}">Sign Up</a>
+      <li class="nav-right">
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+      </li>
+      <li class="nav-right">
+        <a href="{{ url_for('login') }}">Login</a>
+      </li>
       {% endif %}
-      </div>
-       <hr>
+      <li class="nav-right">
+        <a href="{{ url_for('index') }}">Home</a>
+      </li>
+    </ul>
+    <div class="filler">
+      <!-- empty so user can see things otherwise hidden by the nav bar -->
+    </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul>
-        {% for message in messages %}
-            <li>{{ message }} </li>
-        {% endfor %}
-        </ul>
-      {% endif %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }} </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
   </body>
