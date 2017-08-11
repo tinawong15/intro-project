@@ -2,6 +2,7 @@
   <head>
     <title>{{ title }} - Loudspeaker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></link>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </head>
   <body>
     <ul class="nav">
@@ -31,12 +32,12 @@
       <!-- empty so user can see things otherwise hidden by the nav bar -->
     </div>
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-    <ul>
+    {% if messages %}
+    <div class="flash-holder">
       {% for message in messages %}
-      <li>{{ message }} </li>
+      <div class="flash">{{ message }} </div><br>
       {% endfor %}
-    </ul>
+    </div>
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}

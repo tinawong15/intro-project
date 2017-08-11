@@ -2,24 +2,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Sign In</h1>
-  <form action="" method="post" name="login">
+<center>
+  <div class="card">
+    <span class="title">Log in</span>
+    <form action="" method="post" name="login">
       {{ form.hidden_tag() }}
       <p>
-          Username:<br>
-          {{ form.username(size=80) }}<br>
-          {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br>
+      Username:
+      {{ form.username() }}<br>
+      {% for error in form.username.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       </p>
       <p>
-          Password:<br>
-          {{ form.password(size=80) }}<br>
-          {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br>
+      Password:
+      {{ form.password() }}<br>
+      {% for error in form.password.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       </p>
-      
+
       <p><input type="submit" value="Sign In"></p>
-  </form>
+    </form>
+  </div>
+</center>
 {% endblock %}

@@ -1,47 +1,101 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
 .nav {
-    margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    position: fixed;
-    background-color: #eeeeee;
-    list-style-type: none;
-    overflow: hidden;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  position: fixed;
+  background-color: #eeeeee;
+  list-style-type: none;
+  overflow: hidden;
 }
 
 .nav-left {
-    float: left;
+  float: left;
 }
 
 .nav-right {
-    float: right;
+  float: right;
 }
 
 .nav-logo a {
-    display: block;
-    font-size: 24px;
-    padding: 5px;
-    padding-left: 10px;
-    text-decoration: none;
-    color: black;
+  display: block;
+  font-size: 24px;
+  padding: 5px;
+  padding-left: 10px;
+  text-decoration: none;
+  color: black;
 }
 
 .nav-right a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    padding: 10px;
-    border-left: 1px solid black;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  border-left: 1px solid black;
 }
 
 .nav-right a:hover {
-    background-color: #cccccc;
+  background-color: #cccccc;
 }
 
 .filler {
-    height: 40px;
-    width: 100%;
+  height: 40px;
+  width: 100%;
+}
+
+.card {
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  background-color: #eeeeee;
+  display: inline-block;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.flash-holder {
+  z-index: 1;
+  position: absolute;
+  left: 10px;
+  top: -100%;
+  margin-top: 50px;
+  animation: present-flashed 8s ease 0.5s 1 normal forwards;
+  -webkit-animation: present-flashed 8s ease 0.5s 1 normal forwards;
+}
+
+.flash {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  opacity: 0.8;
+  border-radius: 5px;
+}
+
+@keyframes present-flashed {
+  0%, 100% {
+    top: -100%;
+  }
+  5%, 80% {
+    top: 0%;
+  }
+}
+
+@-webkit-keyframes present-flashed {
+  0%, 100% {
+    top: -100%;
+  }
+  5%, 80% {
+    top: 0%;
+  }
 }
