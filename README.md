@@ -10,9 +10,13 @@ Loudspeaker is a simple blog built using HTML, CSS, Python Flask, and SQL.
 - pip
 
 ## Installation
+``` sh
 $ git clone https://github.com/tinawong15/intro-project
 $ cd intro-project
 $ pip install -r requirements.txt
+```
 
 ## Run on localhost
+``` sh
 $ python run.py
+```
