@@ -86,6 +86,12 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/users')
+def users():
+    users = User.query.all()
+    users.remove(g.user)
+    return render_template('users.html', users=users, u=g.user)
+
 @app.route('/user/<username>')
 @login_required
 def user(username):
@@ -99,7 +105,8 @@ def user(username):
     ]
     return render_template('user.html',
                            user=user,
-                           posts=posts)
+                           posts=posts,
+                           title=username)
 
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required

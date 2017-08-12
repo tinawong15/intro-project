@@ -1,6 +1,13 @@
 body {
   font-family: "Open Sans", sans-serif;
+  text-align: center;
 }
+
+.content {
+  margin: 20px 50px;
+  padding 10px;
+}
+
 .nav {
   z-index: 2;
   margin: 0;
@@ -53,7 +60,7 @@ body {
 .card {
   padding: 20px;
   margin: 10px;
-  text-align: center;
+  text-align: left;
   background-color: #eeeeee;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: inline-block;
@@ -62,6 +69,9 @@ body {
 .title {
   font-size: 28px;
   font-weight: bold;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 input[type=text], input[type=password] {
@@ -120,4 +130,19 @@ input[type=submit]:hover {
   5%, 80% {
     top: 0%;
   }
+}
+
+.follow-btn {
+  background-color: #6666ff;
+  color: white;
+  font-size: 18px;
+  padding: 5px 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.follow-btn:hover {
+  background-color: #4444cc;
 }
