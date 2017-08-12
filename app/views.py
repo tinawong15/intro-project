@@ -4,6 +4,7 @@ from app import app, db, lm
 from .forms import LoginForm, SignupForm, EditForm
 from .models import User
 from datetime import datetime
+import hashlib
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -50,9 +51,11 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is not None:
-            login_user(user)
+        hashedPassword = hashlib.sha256(form.password.data).hexdigest()
+        user = User.query.filter_by(username=form.username.data,
+                                    password=hashedPassword).all()
+        if len(user) > 0:
+            login_user(user[0])
     	    flash('Login successful!')
     	    return redirect(url_for('index'))
         flash('Incorrect username or password.')
@@ -66,11 +69,11 @@ def signup():
     if form.validate_on_submit():
         session['username'] = form.username.data
         new_user = User(username = form.username.data,
-                               firstname= form.firstname.data,
-                               lastname = form.lastname.data,
-                               email = form.email.data,
-                               nickname = form.nickname.data,
-                               password = form.password.data)
+                        firstname= form.firstname.data,
+                        lastname = form.lastname.data,
+                        email = form.email.data,
+                        nickname = form.nickname.data,
+                        password = hashlib.sha256(form.password.data).hexdigest())
         
         flash('Welcome to Loudspeaker %s!' % (form.firstname.data))
         db.session.add(new_user)

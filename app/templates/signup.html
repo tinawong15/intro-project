@@ -9,7 +9,7 @@
       {{ form.hidden_tag() }}
       <p>
       First Name:
-      {{ form.firstname() }}<br>
+      {{ form.firstname(autofocus=true, placeholder="Ex: John") }}<br>
       {% for error in form.firstname.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
@@ -17,7 +17,7 @@
 
       <p>
       Last Name:
-      {{ form.lastname() }}<br>
+      {{ form.lastname(placeholder="Ex: Smith") }}<br>
       {% for error in form.lastname.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
@@ -25,7 +25,7 @@
 
       <p>
       Nickname:
-      {{ form.nickname() }}<br>
+      {{ form.nickname(placeholder="Ex: johnny") }}<br>
       {% for error in form.nickname.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
@@ -33,7 +33,7 @@
 
       <p>
       Email:
-      {{ form.email() }}<br>
+      {{ form.email(placeholder="Ex: johnsmith@gmail.com") }}<br>
       {% for error in form.email.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
@@ -41,7 +41,7 @@
 
       <p>
       Username:
-      {{ form.username() }}<br>
+      {{ form.username(placeholder="Ex: jsmith") }}<br>
       {% for error in form.username.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
