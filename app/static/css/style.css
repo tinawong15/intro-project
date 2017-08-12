@@ -8,6 +8,13 @@ body {
   padding 10px;
 }
 
+.flex {
+  margin: 20px 50px;
+  padding 10px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
 .nav {
   z-index: 2;
   margin: 0;
@@ -64,10 +71,28 @@ body {
   background-color: #eeeeee;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: inline-block;
+  max-width: 40%;
+  word-wrap: break-word;
 }
 
 .title {
   font-size: 28px;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 20px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #333333;
+}
+
+.title-big {
+  font-size: 36px;
   font-weight: bold;
   display: block;
   width: 100%;

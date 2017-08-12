@@ -39,5 +39,5 @@ class EditForm(Form):
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
 
 class PostForm(Form):
-    post = StringField('post', validators=[DataRequired()])
+    post = TextAreaField('post', validators=[DataRequired()])
     

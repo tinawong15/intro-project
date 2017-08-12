@@ -90,7 +90,7 @@ def logout():
 def users():
     users = User.query.all()
     users.remove(g.user)
-    return render_template('users.html', users=users, u=g.user)
+    return render_template('users.html', users=users, u=g.user, title='Users')
 
 @app.route('/user/<username>')
 @login_required

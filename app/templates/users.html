@@ -2,21 +2,23 @@
 
 {% block content %}
 <h1>All Users</h1>
-{% for user in users %}
-<div class="card">
- <a href="{{ url_for('user', username=user.username) }}" class="title">{{ user.nickname }}</a> 
-  <p>
-  {% if user.about_me %}
-  {{ user.about_me }}
-  {% else %}
-  No description
-  {% endif %}
-  </p>
-  {% if user in u.followed %}
-  <a href="{{ url_for('unfollow', username=user.username) }}" class="follow-btn">Unfollow</a>
-  {% else %}
-  <a href="{{ url_for('follow', username=user.username) }}" class="follow-btn">Follow</a>
-  {% endif %}
+<div class="flex">
+  {% for user in users %}
+  <div class="card">
+    <a href="{{ url_for('user', username=user.username) }}" class="title">{{ user.nickname }}</a> 
+    <p>
+    {% if user.about_me %}
+    {{ user.about_me }}
+    {% else %}
+    No description
+    {% endif %}
+    </p>
+    {% if user in u.followed %}
+    <a href="{{ url_for('unfollow', username=user.username) }}" class="follow-btn">Unfollow</a>
+    {% else %}
+    <a href="{{ url_for('follow', username=user.username) }}" class="follow-btn">Follow</a>
+    {% endif %}
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}
