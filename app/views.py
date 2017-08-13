@@ -39,7 +39,7 @@ def index():
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('index'))
-    posts = g.user.followed_posts().all()
+    posts = g.user.followed_posts().order_by(Post.timestamp.desc()).all()
     return render_template('index.html',
                            title='Home',
                            form=form,
@@ -99,7 +99,7 @@ def user(username):
     if user == None:
         flash('User %s not found.' % username)
         return redirect(url_for('index'))
-    posts = user.posts.all()
+    posts = user.posts.order_by(Post.timestamp.desc()).all()
     return render_template('user.html',
                            user=user,
                            posts=posts,
@@ -173,3 +173,10 @@ def unfollow(username):
     db.session.commit()
     flash('You have stopped following ' + username + '.')
     return redirect(url_for('user', username=username))
+
+@app.route('/posts')
+def posts():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('posts.html',
+                           posts=posts,
+                           title='All posts')
