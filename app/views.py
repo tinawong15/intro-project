@@ -99,10 +99,7 @@ def user(username):
     if user == None:
         flash('User %s not found.' % username)
         return redirect(url_for('index'))
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
+    posts = g.user.followed_posts()
     return render_template('user.html',
                            user=user,
                            posts=posts,
@@ -123,6 +120,21 @@ def edit():
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
     return render_template('edit.html', form=form)
+   
+@app.route('/edit/<int:id>', methods=['POST', 'GET'])
+@login_required
+def editPost(id):
+    post = Post.query.filter_by(id=id).first()
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.post.data
+        db.session.add(post)
+        db.session.commit()
+        flash('The post has been updated.')
+        return redirect(url_for('index'))
+    else:
+        form.post.data = post.body
+    return render_template('editpost.html', form=form)
 
 @app.route('/follow/<username>')
 @login_required

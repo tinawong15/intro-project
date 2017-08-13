@@ -1,0 +1,18 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Edit Post</h1>
+  <form action="" method="post" name="editpost">
+      {{form.hidden_tag()}}
+      <table>
+          <tr>
+              <td>Your post:</td>
+              <td>{{ form.post(size=24) }}</td>
+          </tr>
+          <tr>
+              <td><input type="submit" value="Save Changes"></td>
+          </tr>
+      </table>
+  </form>
+{% endblock %}
