@@ -99,7 +99,7 @@ def user(username):
     if user == None:
         flash('User %s not found.' % username)
         return redirect(url_for('index'))
-    posts = g.user.followed_posts()
+    posts = user.posts.all()
     return render_template('user.html',
                            user=user,
                            posts=posts,
@@ -121,7 +121,7 @@ def edit():
         form.about_me.data = g.user.about_me
     return render_template('edit.html', form=form)
    
-@app.route('/edit/<int:id>', methods=['POST', 'GET'])
+@app.route('/edit/<id>', methods=['POST', 'GET'])
 @login_required
 def editPost(id):
     post = Post.query.filter_by(id=id).first()

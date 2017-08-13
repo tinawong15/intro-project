@@ -1,18 +1,17 @@
-<!-- extend base layout -->
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-  <h1>Edit Post</h1>
-  <form action="" method="post" name="editpost">
-      {{form.hidden_tag()}}
-      <table>
-          <tr>
-              <td>Your post:</td>
-              <td>{{ form.post(size=24) }}</td>
-          </tr>
-          <tr>
-              <td><input type="submit" value="Save Changes"></td>
-          </tr>
-      </table>
+<span class="title">Edit your post</span>
+<div class="card">
+  <form action="" method="post" name="post">
+    {{ form.hidden_tag() }}
+    {{ form.post(cols=50, rows=20) }}<br><br>
+    <center>
+      {% for error in form.post.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <input type="submit"></input>
+    </center>
   </form>
+</div>
 {% endblock %}

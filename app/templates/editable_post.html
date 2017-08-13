@@ -1,0 +1,11 @@
+<div class="card">
+  <div>
+    {{ post.author.nickname }} says: <b>{{ post.body }}</b>
+  </div> <br>
+  <div class="right">
+    <a href="{{ url_for('editPost', id=post.id) }}">
+      <img src="/static/img/edit.png" alt="" class="icon-size" title="Edit post">
+    </a>
+  </div>
+</div>
+
