@@ -5,6 +5,7 @@ from .forms import LoginForm, SignupForm, EditForm, PostForm
 from .models import User, Post
 from datetime import datetime
 import hashlib
+from config import ADMINS
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -72,7 +73,10 @@ def signup():
                         email = form.email.data,
                         nickname = form.nickname.data,
                         password = hashlib.sha256(form.password.data).hexdigest())
-        
+        if form.email.data in ADMINS:
+            new_user.is_admin = True
+        else:
+            new_user.is_admin = False
         flash('Welcome to Loudspeaker %s!' % (form.firstname.data))
         db.session.add(new_user)
         db.session.commit()
@@ -180,3 +184,27 @@ def posts():
     return render_template('posts.html',
                            posts=posts,
                            title='All posts')
+
+@app.route('/delete_post/<int:id>', methods=['GET'])
+@login_required
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first()
+    if post is None:
+        flash('Post not found')
+        return redirect(url_for('index'))
+
+    if post.author == g.user or g.user.is_admin:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post has been deleted.')
+        return redirect(url_for('index'))
+
+@app.route('/delete_user/<int:id>', methods=["GET"])
+@login_required
+def delete_user(id):
+    if id == g.user.id or g.user.is_admin:
+        user = User.query.filter_by(id=id)
+        Post.query.filter_by(author=user.first()).delete()
+        user.delete()
+        db.session.commit()
+    return redirect(url_for('index'))        

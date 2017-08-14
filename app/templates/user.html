@@ -18,12 +18,15 @@
       <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
       {% endif %}
       </p>
+      <p>{% if g.user.is_admin %}
+      <a href="{{ url_for('delete_user', id=user.id) }}">Delete account</a>
+      {% endif %}
     </td>
   </tr>
 </table>
 <hr>
 <div class="flex">
-  {% if user == g.user %}
+  {% if user == g.user or g.user.is_admin %}
     {% for post in posts %}
     {% include 'editable_post.html' %}
     {% endfor %}
