@@ -1,0 +1,14 @@
+<p>Dear {{ follower.nickname }},</p>
+<p>You are now following <a href="{{ url_for('user', username=user.username, _external=True)}}">{{ user.nickname }}</a> on Loudspeaker.</p>
+<table>
+    <tr valign="top">
+        <td><img src="{{ user.avatar(50) }}"></td>
+        <td>
+            <a href="{{ url_for('user', username=user.username, _external=True)}}">{{ user.nickname }}</a><br />
+            {{ user.about_me }}
+        </td>
+    </tr>
+</table>
+<p>Regards,</p>
+<p>The Loudspeaker admin</p>
+

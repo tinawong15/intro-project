@@ -4,7 +4,7 @@ from app import app, db, lm
 from .forms import LoginForm, SignupForm, EditForm, PostForm
 from .models import User, Post
 from datetime import datetime
-from emails import follower_notification, unfollowed_notification
+from emails import follower_notification, followee_notification
 import hashlib
 from config import ADMINS
 
@@ -158,6 +158,7 @@ def follow(username):
     db.session.add(u)
     db.session.commit()
     follower_notification(user, g.user)
+    followee_notification(user, g.user)
     flash('You are now following ' + username + '!')
     return redirect(url_for('user', username=username))
 
@@ -177,7 +178,6 @@ def unfollow(username):
         return redirect(url_for('user', username=username))
     db.session.add(u)
     db.session.commit()
-    unfollowed_notification(user, g.user)
     flash('You have stopped following ' + username + '.')
     return redirect(url_for('user', username=username))
 

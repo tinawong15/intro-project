@@ -27,3 +27,11 @@ def follower_notification(followed, follower):
                                user=followed, follower=follower),
                render_template("follower_email.html",
                                user=followed, follower=follower))
+def followee_notification(followed, follower):
+    send_email("[Loudspeaker] You are now following %s!" % followed.nickname,
+               ADMINS[0],
+               [follower.email],
+               render_template("followee_email.txt",
+                               user=followed, follower=follower),
+               render_template("followee_email.html",
+                               user=followed, follower=follower))

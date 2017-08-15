@@ -1,0 +1,9 @@
+Dear {{ follower.nickname }},
+
+You are now following {{ user.nickname }} on Loudspeaker. Click on the following link to visit {{ user.nickname }}'s profile page:
+
+{{ url_for("user", username=user.username, _external=True) }}
+
+Regards,
+
+The Loudspeaker admin
