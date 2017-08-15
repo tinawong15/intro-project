@@ -21,6 +21,13 @@ def internal_error(error):
 def load_user(id):
     return User.query.get(int(id))
 
+@app.route('/stats', methods=['GET'])
+@login_required
+def stats():
+    post_count = Post.query.count()
+    user_count = User.query.count()
+    return render_template('stats.html', post_count=post_count, user_count=user_count)
+
 @app.before_request
 def before_request():
     g.user = current_user
