@@ -33,6 +33,10 @@
         <a href="{{ url_for('posts') }}">All Posts</a>
       </li>
       {% endif %}
+      {% if g.user.is_admin %}
+      <li class="right">
+      <a href="{{ url_for('stats') }}">Statistics</a></li>
+      {% endif %}
       <li class="right">
         <a href="{{ url_for('index') }}">Home</a>
       </li>
