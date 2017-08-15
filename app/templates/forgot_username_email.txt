@@ -1,0 +1,7 @@
+Dear {{ user.nickname }},
+
+Your username is: {{ user.username }}
+Use it to login next time you go on Loudspeaker.
+
+Regards,
+The Loudspeaker admin

@@ -35,8 +35,17 @@ class SignupForm(Form):
         return not isError
 
 class EditForm(Form):
-    nickname = StringField('nickname', validators=[DataRequired()])
+    nickname = StringField('nickname')
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])
+    password = PasswordField('password', validators=[EqualTo('password2', message='Passwords must match.')])
+    password2 = PasswordField('password2')
 
 class PostForm(Form):
     post = TextAreaField('post', validators=[DataRequired()])
+
+class ForgotUsernameForm(Form):
+    email = StringField('email', validators=[DataRequired(), Email()])
+
+class ForgotPasswordForm(Form):
+    username = StringField('username', validators=[DataRequired()])
+    email = StringField('email', validators=[DataRequired(), Email()])

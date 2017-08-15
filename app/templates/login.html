@@ -11,15 +11,17 @@
       Username:
       {{ form.username(autofocus=true) }}<br>
       {% for error in form.username.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
+      <span style="color: red;">[{{ error }}]</span><br>
+      {% endfor %}
+      <a href="{{ url_for('forgot_username') }}">Forgot username</a>
       </p>
       <p>
       Password:
       {{ form.password() }}<br>
       {% for error in form.password.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
+      <span style="color: red;">[{{ error }}]</span><br>
+      {% endfor %}
+      <a href="{{ url_for('forgot_password') }}">Forgot password</a>
       </p>
 
       <p>

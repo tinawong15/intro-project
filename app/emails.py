@@ -35,3 +35,23 @@ def followee_notification(followed, follower):
                                user=followed, follower=follower),
                render_template("followee_email.html",
                                user=followed, follower=follower))
+
+def forgot_username_email(user):
+    send_email("[Loudspeaker] Forgotten username",
+               ADMINS[0],
+               [user.email],
+               render_template('forgot_username_email.txt',
+                               user=user),
+               render_template('forgot_username_email.html',
+                               user=user))
+
+def forgot_password_email(user, temp_password):
+    send_email("[Loudspeaker] Forgotten password",
+               ADMINS[0],
+               [user.email],
+               render_template('forgot_password_email.txt',
+                               user=user,
+                               temp_password=temp_password),
+               render_template('forgot_password_email.html',
+                               user=user,
+                               temp_password=temp_password))

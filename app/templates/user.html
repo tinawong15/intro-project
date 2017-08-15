@@ -11,7 +11,7 @@
       {% if user.last_seen %}<p><i>Last seen on: {{ user.last_seen }}</i></p>{% endif %}
       <p>{{ user.followers.count() }} followers | 
       {% if user.id == g.user.id %}
-      <a href="{{ url_for('edit') }}">Edit your profile</a>
+      <a href="{{ url_for('edit') }}">Edit your profile or password</a>
       {% elif not g.user.is_following(user) %}
       <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
       {% else %}

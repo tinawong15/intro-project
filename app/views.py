@@ -1,11 +1,12 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
-from .forms import LoginForm, SignupForm, EditForm, PostForm
+from .forms import LoginForm, SignupForm, EditForm, PostForm, ForgotUsernameForm, ForgotPasswordForm
 from .models import User, Post
 from datetime import datetime
-from emails import follower_notification, followee_notification
+from emails import follower_notification, followee_notification, forgot_username_email, forgot_password_email
 import hashlib
+from random import randint
 from config import ADMINS
 
 @app.errorhandler(404)
@@ -122,16 +123,20 @@ def user(username):
 def edit():
     form = EditForm()
     if form.validate_on_submit():
-        g.user.nickname = form.nickname.data
-        g.user.about_me = form.about_me.data
+        if form.nickname.data:
+            g.user.nickname = form.nickname.data
+        if form.about_me.data:
+            g.user.about_me = form.about_me.data
+        if form.password.data:
+            g.user.password = hashlib.sha256(form.password.data).hexdigest()
         db.session.add(g.user)
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit'))
+        return redirect(url_for('index'))
     else:
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
-    return render_template('edit.html', form=form)
+    return render_template('edit.html', form=form, title='Edit Profile')
    
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 @login_required
@@ -146,7 +151,7 @@ def editPost(id):
         return redirect(url_for('index'))
     else:
         form.post.data = post.body
-    return render_template('editpost.html', form=form)
+    return render_template('editpost.html', form=form, title='Edit post')
 
 @app.route('/follow/<username>')
 @login_required
@@ -218,3 +223,44 @@ def delete_user(id):
         user.delete()
         db.session.commit()
     return redirect(url_for('index'))        
+
+@app.route('/forgot_username', methods=['GET', 'POST'])
+def forgot_username():
+    form = ForgotUsernameForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None:
+            flash('There are no users with that email')
+            return redirect(url_for('forgot_username'))
+        forgot_username_email(user)
+        flash('An email has been sent to %s' % form.email.data)
+        return redirect(url_for('index'))
+    return render_template('forgot_username.html',
+                           title='Forgot username',
+                           form=form)
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        user2 = User.query.filter_by(username=form.username.data).first()
+        if user is None or user != user2:
+            flash('There are no users with that username and email')
+            return redirect(url_for('forgot_password'))
+        temp_password = gen_password()
+        user.password = hashlib.sha256(temp_password).hexdigest()
+        db.session.commit()
+        forgot_password_email(user, temp_password)
+        flash('An email has been sent to %s' % form.email.data)
+        return redirect(url_for('index'))
+    return render_template('forgot_password.html',
+                           title='Forgot password',
+                           form=form)
+
+def gen_password():
+    chars = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
+    password = ''
+    for i in range(8):
+        password += chars[randint(0, len(chars)-1)]
+    return password
