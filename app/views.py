@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, session, url_for, request, g, make_response, send_file
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm
 from .forms import LoginForm, SignupForm, EditForm, PostForm, ForgotUsernameForm, ForgotPasswordForm
@@ -8,6 +8,7 @@ from emails import follower_notification, followee_notification, forgot_username
 import hashlib
 from random import randint
 from config import ADMINS
+import csv, StringIO
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -28,6 +29,26 @@ def stats():
     post_count = Post.query.count()
     user_count = User.query.count()
     return render_template('stats.html', post_count=post_count, user_count=user_count)
+
+@app.route('/csv', methods=['GET'])
+@login_required
+def download_csv():
+    if g.user.is_admin:
+        users = [User.query.first().__dict__.keys()]
+        all_users = User.query.all()
+        user_list=[]
+        for user in all_users:
+            for key, value in user.__dict__.items():
+               user_list += [value]
+            users += [user_list]
+        si = StringIO.StringIO()
+        cw = csv.writer(si)
+        cw.writerows(users)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=users.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+    return redirect(url_for('index'))
 
 @app.before_request
 def before_request():

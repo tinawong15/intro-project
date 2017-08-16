@@ -37,6 +37,8 @@
       {% if g.user.is_admin %}
       <li class="right">
       <a href="{{ url_for('stats') }}">Statistics</a></li>
+      <li class="right">
+      <a href="{{ url_for('download_csv') }}">CSV of Users</a></li>
       {% endif %}
       <li class="right">
         <a href="{{ url_for('index') }}">Home</a>
