@@ -4,7 +4,7 @@ from app import app, db, lm
 from .forms import LoginForm, SignupForm, EditForm, PostForm, ForgotUsernameForm, ForgotPasswordForm
 from .models import User, Post
 from datetime import datetime
-from emails import follower_notification, followee_notification, forgot_username_email, forgot_password_email
+from emails import follower_notification, followee_notification, forgot_username_email, forgot_password_email, confirm_signup_email
 import hashlib
 from random import randint
 from config import ADMINS
@@ -89,8 +89,9 @@ def signup():
         flash('Welcome to Loudspeaker %s!' % (form.firstname.data))
         db.session.add(new_user)
         db.session.commit()
-        db.session.add(new_user.follow(new_user))
+        new_user.follow(new_user)
         db.session.commit()
+        confirm_signup_email(new_user)
         return redirect(url_for('login'))
     return render_template('signup.html', title='Create an Account', form=form)
 

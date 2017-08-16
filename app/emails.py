@@ -55,3 +55,10 @@ def forgot_password_email(user, temp_password):
                render_template('forgot_password_email.html',
                                user=user,
                                temp_password=temp_password))
+
+def confirm_signup_email(user):
+    send_email("[Loudspeaker] Account created",
+            ADMINS[0],
+            [user.email],
+            render_template('confirm.txt', user=user),
+            render_template('confirm.html', user=user))

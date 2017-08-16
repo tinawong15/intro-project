@@ -1,0 +1,7 @@
+Dear {{ user.nickname }},
+
+Your Loudspeaker account has been created! Your username is: {{ user.username }}
+
+Regards,
+
+The Loudspeaker Admin
