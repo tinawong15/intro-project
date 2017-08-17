@@ -11,6 +11,7 @@
         <a href="{{ url_for('index') }}">Loudspeaker</a>
       </li>
       {% if g.user.is_authenticated %} 
+      <form style="display: inline;" action="{{ url_for('search') }}" method="post" name="search">{{ g.search_form.hidden_tag() }}{{ g.search_form.search(size=20) }}<input type="submit" value="Search"></form>
       <li class="right">
         <a href="{{ url_for('logout') }}">Logout</a>
       </li>
@@ -33,6 +34,7 @@
       <li class="right">
         <a href="{{ url_for('posts') }}">All Posts</a>
       </li>
+
       {% endif %}
       {% if g.user.is_admin %}
       <li class="right">

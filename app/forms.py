@@ -49,3 +49,6 @@ class ForgotUsernameForm(Form):
 class ForgotPasswordForm(Form):
     username = StringField('username', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
+
+class SearchForm(Form):
+    search = StringField('search', validators=[DataRequired()])
