@@ -17,6 +17,14 @@
       {% else %}
       <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
       {% endif %}
+      {% if g.user.is_admin %}
+      |
+      {% if user.is_admin %}
+      <a href="{{ url_for('remove_admin', username=user.username) }}">Remove admin status</a>
+      {% else %}
+      <a href="{{ url_for('make_admin', username=user.username) }}">Make admin</a>
+      {% endif %}
+      {% endif %}
       </p>
       <p>{% if g.user.is_admin %}
       <a href="{{ url_for('delete_user', id=user.id) }}">Delete account</a>
@@ -27,13 +35,13 @@
 <hr>
 <div class="flex">
   {% if user == g.user or g.user.is_admin %}
-    {% for post in posts %}
-    {% include 'editable_post.html' %}
-    {% endfor %}
+  {% for post in posts %}
+  {% include 'editable_post.html' %}
+  {% endfor %}
   {% else %}
-    {% for post in posts %}
-    {% include 'post.html' %}
-    {% endfor %}
+  {% for post in posts %}
+  {% include 'post.html' %}
+  {% endfor %}
   {% endif %}
 </div>
 {% endblock %}

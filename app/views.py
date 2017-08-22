@@ -179,6 +179,9 @@ def edit():
 @login_required
 def editPost(id):
     post = Post.query.filter_by(id=id).first()
+    if not g.user.is_admin or g.user.id != post.user_id:
+        flash('You can only edit your own posts')
+        return redirect('index')
     form = PostForm()
     if form.validate_on_submit():
         post.body = form.post.data
@@ -301,3 +304,36 @@ def gen_password():
     for i in range(8):
         password += chars[randint(0, len(chars)-1)]
     return password
+
+@app.route('/make_admin/<username>')
+@login_required
+def remove_admin(username):
+    if not g.user.is_admin:
+        flash('You do not have admin priveleges')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User %s not found.' % username)
+        return redirect(url_for('index'))
+    user.is_admin = False
+    db.session.add(user)
+    db.session.commit()
+    flash('%s is no longer an admin' % user.nickname)
+    return redirect(url_for('index'))
+
+@app.route('/remove_admin/<username>')
+@login_required
+def make_admin(username):
+    if not g.user.is_admin:
+        flash('You do not have admin priveleges')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User %s not found.' % username)
+        return redirect(url_for('index'))
+    user.is_admin = True
+    db.session.add(user)
+    db.session.commit()
+    flash('%s is now an admin' % user.nickname)
+    return redirect(url_for('index'))
+
