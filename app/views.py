@@ -26,9 +26,19 @@ def load_user(id):
 @app.route('/stats', methods=['GET'])
 @login_required
 def stats():
-    post_count = Post.query.count()
+    posts = Post.query.all()
+    post_count = len(posts)
     user_count = User.query.count()
-    return render_template('stats.html', post_count=post_count, user_count=user_count)
+    avg_num_posts = post_count / float(user_count)
+    avg_post_length = 0
+    for post in posts:
+        avg_post_length += len(post.body)
+    avg_post_length /= post_count
+    return render_template('stats.html', 
+                           post_count=post_count, 
+                           user_count=user_count,
+                           avg_post_length=avg_post_length,
+                           avg_num_posts=avg_num_posts)
 
 @app.route('/csv', methods=['GET'])
 @login_required

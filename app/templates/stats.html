@@ -2,8 +2,10 @@
 {% extends "base.html" %}
 {% block content %}
 <center>
-<h1>Statistics</h1>
-<p>Number of users: {{ user_count }}</p>
-<p>Number of posts: {{ post_count }}</p>
+  <h1>Statistics</h1>
+  <p>Number of users: {{ user_count }}</p>
+  <p>Number of posts: {{ post_count }}</p>
+  <p>Average number of posts per user: {{ avg_num_posts }}</p>
+  <p>Average post length: {{ avg_post_length }} characters</p>
 </center>
 {% endblock %}
